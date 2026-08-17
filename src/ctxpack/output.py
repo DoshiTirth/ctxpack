@@ -49,7 +49,12 @@ def to_json(result: BudgetResult, root_label: str) -> str:
         "root": root_label,
         "total_tokens": result.total_tokens,
         "files": [
-            {"path": f.path.as_posix(), "tokens": f.tokens, "score": round(f.score, 3), "content": f.text}
+            {
+                "path": f.path.as_posix(),
+                "tokens": f.tokens,
+                "score": round(f.score, 3),
+                "content": f.text,
+            }
             for f in result.included
         ],
         "skipped": [p.as_posix() for p in result.skipped],

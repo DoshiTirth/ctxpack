@@ -51,5 +51,8 @@ packages = ["src/ctxpack"]
 line-length = 100
 target-version = "py39"
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

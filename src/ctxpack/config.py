@@ -17,7 +17,7 @@ class Config:
     respect_gitignore: bool = True
 
     @classmethod
-    def load(cls, root: str | Path) -> "Config":
+    def load(cls, root: str | Path) -> Config:
         path = Path(root) / ".ctxpack.yml"
         if not path.exists():
             return cls()
