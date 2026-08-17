@@ -37,9 +37,17 @@ def main() -> None:
 
 @main.command()
 @click.argument("directory", type=click.Path(exists=True, file_okay=False), default=".")
-@click.option("--budget", "budget_tokens", type=int, default=None, help="Max tokens for the bundle.")
+@click.option(
+    "--budget", "budget_tokens", type=int, default=None, help="Max tokens for the bundle."
+)
 @click.option("--format", "output_format", type=click.Choice(["markdown", "json"]), default=None)
-@click.option("--out", "out_path", type=click.Path(), default=None, help="Write output to a file instead of stdout.")
+@click.option(
+    "--out",
+    "out_path",
+    type=click.Path(),
+    default=None,
+    help="Write output to a file instead of stdout.",
+)
 @click.option("--include", multiple=True, help="Glob(s) to restrict inclusion to.")
 @click.option("--exclude", multiple=True, help="Glob(s) to exclude.")
 @click.option("--no-gitignore", is_flag=True, help="Don't respect .gitignore.")
@@ -83,7 +91,10 @@ def pack(
         budget_tokens=budget_tokens,
     )
 
-    rendered = to_markdown(result, root.name) if output_format == "markdown" else to_json(result, root.name)
+    if output_format == "markdown":
+        rendered = to_markdown(result, root.name)
+    else:
+        rendered = to_json(result, root.name)
 
     if out_path:
         Path(out_path).write_text(rendered, encoding="utf-8")
