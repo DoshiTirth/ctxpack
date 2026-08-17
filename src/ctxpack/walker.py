@@ -51,7 +51,7 @@ def _load_gitignore_spec(root: Path) -> pathspec.PathSpec:
     gitignore_path = root / ".gitignore"
     if gitignore_path.exists():
         patterns.extend(gitignore_path.read_text(errors="ignore").splitlines())
-    return pathspec.PathSpec.from_lines("gitwildmatch", patterns)
+    return pathspec.PathSpec.from_lines("gitignore", patterns)
 
 
 def walk_repo(root: str | Path, options: WalkOptions | None = None) -> list[Path]:
@@ -65,15 +65,15 @@ def walk_repo(root: str | Path, options: WalkOptions | None = None) -> list[Path
     spec = (
         _load_gitignore_spec(root)
         if options.respect_gitignore
-        else pathspec.PathSpec.from_lines("gitwildmatch", DEFAULT_IGNORES)
+        else pathspec.PathSpec.from_lines("gitignore", DEFAULT_IGNORES)
     )
     include_spec = (
-        pathspec.PathSpec.from_lines("gitwildmatch", options.include_globs)
+        pathspec.PathSpec.from_lines("gitignore", options.include_globs)
         if options.include_globs
         else None
     )
     exclude_spec = (
-        pathspec.PathSpec.from_lines("gitwildmatch", options.exclude_globs)
+        pathspec.PathSpec.from_lines("gitignore", options.exclude_globs)
         if options.exclude_globs
         else None
     )
